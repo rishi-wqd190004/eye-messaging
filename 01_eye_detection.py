@@ -103,10 +103,11 @@ while True:
         gaze_ratio_right_eye = find_gaze_ratio([42,43,44,45,46,47], landmarks)
 
         gaze_ratio = (gaze_ratio_right_eye + gaze_ratio_left_eye) / 2
-        if gaze_ratio <= 1:
+        #print("gaze ratio values: ", gaze_ratio)
+        if gaze_ratio <= 0.8:
             cv2.putText(frame, "RIGHT", (50,100), font, 2, (0,255,255), 3)
             new_frame[:] = (0,0,255)
-        elif 1 < gaze_ratio < 1.7:
+        elif 0.8 < gaze_ratio < 1.1:
             cv2.putText(frame, "CENTER", (50,100), font, 2, (0,255,255), 3)
         else:
             new_frame[:] = (255,0,0)
