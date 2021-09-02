@@ -14,7 +14,7 @@
 #### Here I added usage of *dlib* package for getting pointer of points
 ## Idealogy:
 One have seen swiping fingers on keyboard on your phones like below:
-![Source: Google Blog AI](https://1.bp.blogspot.com/-Oz-oMYfar8I/WSW90Jo866I/AAAAAAAAB1k/GO-9rpbpTcMhsfy3edD3lgcjXlLlTQjlwCLcB/s640/image6.gif)
+![Source: Google Blog AI](https://1.bp.blogspot.com/-Oz-oMYfar8I/WSW90Jo866I/AAAAAAAAB1k/GO-9rpbpTcMhsfy3edD3lgcjXlLlTQjlwCLcB/s640/image6.gif width="100" height="100")
 
 Use a similar approach and try to type on the screen or gaze on the keywords.
 
