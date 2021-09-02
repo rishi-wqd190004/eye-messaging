@@ -26,4 +26,4 @@ Use a similar approach and try to type on the screen or gaze on the keywords.
 
 ## Steps taken:
 Get information as shown below screenshot using cv2.
-![Mask results with cropped eye output](screenshots/Screenshot 2021-09-02 at 6.46.55 AM.png?raw=True)
+![Mask results with cropped eye output](https://github.com/rishi-wqd190004/eye-messaging/blob/dev/screenshots/Screenshot%202021-09-02%20at%206.46.55%20AM.png?raw=True)
