@@ -9,6 +9,19 @@ detectors = dlib.get_frontal_face_detector()
 
 predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
 
+# counters
+frames = 0 
+letter_index = 0
+
+keyboard = np.zeros((600, 1000,3), np.uint8)
+
+# dictionary containing the letters each one associated with an index
+key_set_1 = {
+                0: "Q", 1: "W", 2: "E", 3: "R", 4: "T",
+                5: "A", 5: "S", 6: "D", 7: "D", 8: "F", 9: "G",
+                10: "Z", 11: "X", 12: "C", 13: "V", 14: "B"  
+}
+
 font = cv2.FONT_ITALIC
 
 # get mid-points of eye
@@ -78,9 +91,79 @@ def find_gaze_ratio(eye_pt, facial_landmarks):
     # cv2.putText(frame, str(gaze_ratio), (50,200), font, 2, (0,255,255), 3)
     return gaze_ratio
 
+# adding virtual keyboard
+def letters(letter_index, text, letter_ht):
+    if letter_index == 0: 
+        x = 0 
+        y = 0
+    elif letter_index == 1:
+        x = 200
+        y = 0
+    elif letter_index == 2:
+        x = 400
+        y = 0
+    elif letter_index == 3:
+        x = 600
+        y = 0
+    elif letter_index == 4:
+        x = 800
+        y = 0
+    elif letter_index == 5:
+        x = 0
+        y = 200
+    elif letter_index == 6:
+        x = 200
+        y = 200
+    elif letter_index == 7:
+        x = 400
+        y = 200
+    elif letter_index == 8:
+        x = 600
+        y = 200
+    elif letter_index == 9:
+        x = 800
+        y = 200
+    elif letter_index == 10:
+        x = 0
+        y = 400
+    elif letter_index == 11:
+        x = 200
+        y = 400
+    elif letter_index == 12:
+        x = 400
+        y = 400
+    elif letter_index == 13:
+        x = 600
+        y = 400
+    elif letter_index == 14:
+        x = 800
+        y = 400
+    
+    wt, ht = 200, 200
+    th = 3
+
+    if letter_ht == True:
+        cv2.rectangle(keyboard, (x+th, y+th) , (x+wt-th, y+ht-th), (255,255,255), -1)
+
+    else:
+        cv2.rectangle(keyboard, (x+th, y+th) , (x+wt-th, y+ht-th), (255,255,255), th)
+    
+    # adding letter into the above rectangles
+    font_letter = cv2.FONT_HERSHEY_PLAIN
+    font_scale = 10
+    font_thickness = 4
+    text_size = cv2.getTextSize(text, font_letter, font_scale, font_thickness)[0]
+    wt_text, ht_text = text_size[0], text_size[1]
+    text_x = int((wt - wt_text) / 2 ) + x
+    text_y = int((ht + ht_text) / 2 ) + y
+    cv2.putText(keyboard, text, (text_x, text_y), font_letter, font_scale, (0,255,255), font_thickness)
+
 while True:
     _, frame = cap.read()
+    frames = frames + 1
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    # overlapping the keyboard with particular light up
+    keyboard[:] = (0,0,0)
     new_frame = np.zeros((500,500,3), np.uint8)
     faces = detectors(gray)
     for face in faces:
@@ -120,11 +203,23 @@ while True:
         # cv2.imshow("left_eye", left_eye)
         # cv2.imshow("left_th", left_side_th)
         # cv2.imshow("right_th", right_side_th)
-        
-
+    
+    if frames == 10:
+        letter_index = letter_index + 1
+        frames = 0
+    if letter_index == 15:
+        letter_index = 0
+    # display the letters looping through dictionary we created before
+    for i in range(15):
+        if i == 5:
+            light = True
+        else:
+            light = False
+        letters(i, key_set_1[i], light)
 
     cv2.imshow("Frame", frame)
     cv2.imshow("New_frame", new_frame)
+    cv2.imshow("Keyboard", keyboard)
 
     key = cv2.waitKey(1)
     if key == 27:
